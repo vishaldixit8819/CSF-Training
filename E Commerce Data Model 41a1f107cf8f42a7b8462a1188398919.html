@@ -1,0 +1,1122 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>E Commerce Data Model</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+    margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-interactiveBlue { background-color: rgba(35, 131, 226, .07); }
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-translucentGray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+.select-value-color-pageGlass { background-color: undefined; }
+.select-value-color-washGlass { background-color: undefined; }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="41a1f107-cf8f-42a7-b846-2a1188398919" class="page sans"><header><h1 class="page-title">E Commerce Data Model</h1><p class="page-description"></p></header><div class="page-body"><h2 id="db2b5d41-ee4c-44d2-bd2b-1910b20f8840" class="">User</h2><ul id="c8de8c3d-7414-46e3-8ad1-3725eacef39b" class="bulleted-list"><li style="list-style-type:disc">id: integer (unique identifier for the user)</li></ul><ul id="e40092c3-cb8b-4a5b-93e5-da598a342e24" class="bulleted-list"><li style="list-style-type:disc">name: string (name of the user)</li></ul><ul id="0afaceaf-03b4-4983-ab4d-3f87788e394e" class="bulleted-list"><li style="list-style-type:disc">email: string (email address of the user)</li></ul><ul id="afad4f05-a5cf-4f4f-85c7-6d98a6d45702" class="bulleted-list"><li style="list-style-type:disc">password: string (hashed password of the user)</li></ul><ul id="c9a928cd-b0df-43f5-90b5-d9b98fd0be1a" class="bulleted-list"><li style="list-style-type:disc">created_at: datetime (timestamp indicating when the user was created)</li></ul><ul id="378b2c7c-bc48-4f8f-a051-e47178c2629e" class="bulleted-list"><li style="list-style-type:disc">updated_at: datetime (timestamp indicating when the user was last updated)</li></ul><ul id="71d748e7-bade-40b2-8ecb-c6927bf52a24" class="toggle"><li><details open=""><summary>Sample Data:</summary><pre id="21cb58ab-390b-40c0-8e42-b46b68999827" class="code"><code>[
+  {
+    &quot;id&quot;: 101,
+    &quot;name&quot;: &quot;John Doe&quot;,
+    &quot;email&quot;: &quot;john.doe@example.com&quot;,
+    &quot;created_at&quot;: &quot;2023-07-16T08:00:00Z&quot;,
+    &quot;updated_at&quot;: &quot;2023-07-16T08:30:00Z&quot;
+  },
+  {
+    &quot;id&quot;: 102,
+    &quot;name&quot;: &quot;Jane Smith&quot;,
+    &quot;email&quot;: &quot;jane.smith@example.com&quot;,
+    &quot;created_at&quot;: &quot;2023-07-15T09:15:00Z&quot;,
+    &quot;updated_at&quot;: &quot;2023-07-16T09:45:00Z&quot;
+  }
+]</code></pre></details></li></ul><h2 id="2da6e789-1066-4cc7-bba5-e428f5536635" class="">CartItem:</h2><ul id="766295d3-6e9e-463c-b713-c548508abaf4" class="bulleted-list"><li style="list-style-type:disc">id: integer (unique identifier for the cart item)</li></ul><ul id="0c14cd7e-8118-4452-aa5f-9a9bf6043e7b" class="bulleted-list"><li style="list-style-type:disc">user_id: integer (foreign key referencing the User entity)</li></ul><ul id="a16b63ae-aecf-4bf6-b490-9d0139edf961" class="bulleted-list"><li style="list-style-type:disc">product_id: integer (foreign key referencing the Product entity)</li></ul><ul id="488c9629-e8f2-40a1-8e89-ab7a89209065" class="bulleted-list"><li style="list-style-type:disc">quantity: integer (quantity of the product in the cart)</li></ul><ul id="a68b3b80-3d6d-4aa3-8f91-7f3515b3d97c" class="bulleted-list"><li style="list-style-type:disc">created_at: datetime (timestamp indicating when the cart item was created)</li></ul><ul id="6f158501-bead-472e-a4c1-8e3cb27a8254" class="bulleted-list"><li style="list-style-type:disc">updated_at: datetime (timestamp indicating when the cart item was last updated)</li></ul><ul id="a6678c24-ba65-4fcf-b2a8-0154800da3e3" class="toggle"><li><details open=""><summary>Sample Data:</summary><pre id="072fd76e-3764-4da6-8881-820e2de4d9d3" class="code"><code>[
+  {
+    &quot;id&quot;: 1,
+    &quot;user_id&quot;: 101,
+    &quot;product_id&quot;: 201,
+    &quot;quantity&quot;: 2,
+    &quot;created_at&quot;: &quot;2023-07-16T16:00:00Z&quot;,
+    &quot;updated_at&quot;: &quot;2023-07-16T16:00:00Z&quot;
+  },
+  {
+    &quot;id&quot;: 2,
+    &quot;user_id&quot;: 101,
+    &quot;product_id&quot;: 202,
+    &quot;quantity&quot;: 1,
+    &quot;created_at&quot;: &quot;2023-07-16T16:30:00Z&quot;,
+    &quot;updated_at&quot;: &quot;2023-07-16T16:30:00Z&quot;
+  },
+  {
+    &quot;id&quot;: 3,
+    &quot;user_id&quot;: 102,
+    &quot;product_id&quot;: 201,
+    &quot;quantity&quot;: 3,
+    &quot;created_at&quot;: &quot;2023-07-16T17:00:00Z&quot;,
+    &quot;updated_at&quot;: &quot;2023-07-16T17:00:00Z&quot;
+  }
+]</code></pre></details></li></ul><h2 id="ff74b1ff-e821-4e01-aa38-9aa13071b4b9" class="">Product:</h2><ul id="a8140a59-b579-4e33-83a7-2ba6cea31e47" class="bulleted-list"><li style="list-style-type:disc">id: integer (unique identifier for the product)</li></ul><ul id="66552f6a-ec0e-49d9-82f5-4cb467af280a" class="bulleted-list"><li style="list-style-type:disc">name: string (name of the product)</li></ul><ul id="730788e6-5cbd-4306-b74d-164c54b0ad77" class="bulleted-list"><li style="list-style-type:disc">description: string (description of the product)</li></ul><ul id="568c1a0c-4fb5-44ad-a5c1-0e732d5f0b89" class="bulleted-list"><li style="list-style-type:disc">price: decimal (price of the product)</li></ul><ul id="5b8bf50b-9cb5-4a9e-9b52-51241f9d8c65" class="bulleted-list"><li style="list-style-type:disc">brand_id: integer (foreign key referencing the Brand entity)</li></ul><ul id="09db32f2-a6b7-4dbc-89f7-091627a334f3" class="bulleted-list"><li style="list-style-type:disc">category_id: integer (foreign key referencing the Category entity)</li></ul><ul id="4b86a8e0-be1c-422b-b06d-e0c24272232b" class="bulleted-list"><li style="list-style-type:disc">created_at: datetime (timestamp indicating when the product was created)</li></ul><ul id="f2def930-fac9-4a25-946e-aeec5a5ac8b5" class="bulleted-list"><li style="list-style-type:disc">updated_at: datetime (timestamp indicating when the product was last updated)</li></ul><ul id="9f2487e2-56b3-4afe-972f-a65c296727d0" class="toggle"><li><details open=""><summary>Sample Data:</summary><pre id="838c5546-7748-4f16-931e-33a46e357227" class="code"><code>[
+  {
+    &quot;id&quot;: 1,
+    &quot;name&quot;: &quot;Laptop&quot;,
+    &quot;description&quot;: &quot;High-performance laptop for professionals&quot;,
+    &quot;price&quot;: 1200.00,
+    &quot;brand_id&quot;: 1,
+    &quot;category_id&quot;: 2,
+    &quot;created_at&quot;: &quot;2023-07-15T10:30:00Z&quot;,
+    &quot;updated_at&quot;: &quot;2023-07-15T12:45:00Z&quot;
+  },
+  {
+    &quot;id&quot;: 2,
+    &quot;name&quot;: &quot;Smartphone&quot;,
+    &quot;description&quot;: &quot;Latest smartphone with advanced features&quot;,
+    &quot;price&quot;: 800.00,
+    &quot;brand_id&quot;: 2,
+    &quot;category_id&quot;: 3,
+    &quot;created_at&quot;: &quot;2023-07-15T11:15:00Z&quot;,
+    &quot;updated_at&quot;: &quot;2023-07-15T11:30:00Z&quot;
+  },
+  {
+    &quot;id&quot;: 3,
+    &quot;name&quot;: &quot;TV&quot;,
+    &quot;description&quot;: &quot;Ultra HD TV with a large display&quot;,
+    &quot;price&quot;: 1500.00,
+    &quot;brand_id&quot;: 3,
+    &quot;category_id&quot;: 4,
+    &quot;created_at&quot;: &quot;2023-07-15T09:45:00Z&quot;,
+    &quot;updated_at&quot;: &quot;2023-07-15T10:00:00Z&quot;
+  }
+]</code></pre></details></li></ul><h2 id="8f9f7e85-30a2-4c33-a899-fbfda5a384fe" class="">Category:</h2><ul id="475ad79d-9db6-4746-88da-178814b954c1" class="bulleted-list"><li style="list-style-type:disc">id: integer (unique identifier for the category)</li></ul><ul id="bf6f7535-2f4c-44dc-92ef-1f99dcb28ebd" class="bulleted-list"><li style="list-style-type:disc">name: string (name of the category)</li></ul><ul id="38cfce43-220a-4ecb-9db7-031ab98681db" class="bulleted-list"><li style="list-style-type:disc">description: string (description of the category)</li></ul><ul id="56bc2ca5-9f92-4fa7-8384-4989d32391a9" class="bulleted-list"><li style="list-style-type:disc">parent_id: integer (foreign key referencing the parent Category entity, allows for hierarchical category structure)</li></ul><ul id="0ede96cc-b2df-4934-b93e-17ec0d87928b" class="bulleted-list"><li style="list-style-type:disc">created_at: datetime (timestamp indicating when the category was created)</li></ul><ul id="2574ab17-b71e-465f-9e36-5bf4e4f2f715" class="bulleted-list"><li style="list-style-type:disc">updated_at: datetime (timestamp indicating when the category was last updated)</li></ul><ul id="d0d2a140-47ec-41c7-8ad5-4e51dab39d71" class="toggle"><li><details open=""><summary>Sample Data:</summary><pre id="afece690-432d-4d32-afce-1dbea315bce2" class="code"><code>[
+  {
+    &quot;id&quot;: 1,
+    &quot;name&quot;: &quot;Electronics&quot;,
+    &quot;description&quot;: &quot;Electronic devices and gadgets&quot;,
+    &quot;parent_id&quot;: null,
+    &quot;created_at&quot;: &quot;2023-07-14T12:30:00Z&quot;,
+    &quot;updated_at&quot;: &quot;2023-07-14T12:30:00Z&quot;
+  },
+  {
+    &quot;id&quot;: 2,
+    &quot;name&quot;: &quot;Laptops&quot;,
+    &quot;description&quot;: &quot;Various laptop models&quot;,
+    &quot;parent_id&quot;: 1,
+    &quot;created_at&quot;: &quot;2023-07-14T12:45:00Z&quot;,
+    &quot;updated_at&quot;: &quot;2023-07-14T12:45:00Z&quot;
+  },
+  {
+    &quot;id&quot;: 3,
+    &quot;name&quot;: &quot;Smartphones&quot;,
+    &quot;description&quot;: &quot;Smartphone devices&quot;,
+    &quot;parent_id&quot;: 1,
+    &quot;created_at&quot;: &quot;2023-07-14T12:50:00Z&quot;,
+    &quot;updated_at&quot;: &quot;2023-07-14T12:50:00Z&quot;
+  },
+  {
+    &quot;id&quot;: 4,
+    &quot;name&quot;: &quot;TVs&quot;,
+    &quot;description&quot;: &quot;Television sets&quot;,
+    &quot;parent_id&quot;: 1,
+    &quot;created_at&quot;: &quot;2023-07-14T13:00:00Z&quot;,
+    &quot;updated_at&quot;: &quot;2023-07-14T13:00:00Z&quot;
+  }
+]</code></pre></details></li></ul><h2 id="53c5ce77-abee-4682-9637-b0a8d2814753" class="">Brand:</h2><ul id="5cc95ad3-1590-48be-a483-929d076a7795" class="bulleted-list"><li style="list-style-type:disc">id: integer (unique identifier for the brand)</li></ul><ul id="4e4912a1-d3d8-4320-8653-3ab28e68e85c" class="bulleted-list"><li style="list-style-type:disc">name: string (name of the brand)</li></ul><ul id="ab3b67a8-d30d-4850-8faa-bd670e6862b9" class="bulleted-list"><li style="list-style-type:disc">description: string (description of the brand)</li></ul><ul id="d95e3588-7a64-4138-89e5-dc9bd8570c79" class="bulleted-list"><li style="list-style-type:disc">created_at: datetime (timestamp indicating when the brand was created)</li></ul><ul id="18ba4b42-450e-4f4f-9304-1fdbcde442b6" class="bulleted-list"><li style="list-style-type:disc">updated_at: datetime (timestamp indicating when the brand was last updated)</li></ul><ul id="2eaeddbc-19d8-4da6-9446-e2a2d7e4308f" class="toggle"><li><details open=""><summary>Sample Data:</summary><pre id="64e89a56-35e5-41d5-afe2-45a38e2e18c4" class="code"><code>[
+  {
+    &quot;id&quot;: 1,
+    &quot;name&quot;: &quot;Dell&quot;,
+    &quot;description&quot;: &quot;Leading laptop manufacturer&quot;,
+    &quot;created_at&quot;: &quot;2023-07-14T15:20:00Z&quot;,
+    &quot;updated_at&quot;: &quot;2023-07-14T15:20:00Z&quot;
+  },
+  {
+    &quot;id&quot;: 2,
+    &quot;name&quot;: &quot;Apple&quot;,
+    &quot;description&quot;: &quot;Innovative technology company&quot;,
+    &quot;created_at&quot;: &quot;2023-07-14T16:10:00Z&quot;,
+    &quot;updated_at&quot;: &quot;2023-07-14T16:10:00Z&quot;
+  },
+  {
+    &quot;id&quot;: 3,
+    &quot;name&quot;: &quot;Samsung&quot;,
+    &quot;description&quot;: &quot;Global electronics manufacturer&quot;,
+    &quot;created_at&quot;: &quot;2023-07-14T14:50:00Z&quot;,
+    &quot;updated_at&quot;: &quot;2023-07-14T14:50:00Z&quot;
+  }
+]</code></pre></details></li></ul><h2 id="f7e35e01-f880-408f-b438-c3a4bf66733d" class="">ProductVariant:</h2><ul id="89518162-8fe7-45c7-9992-ebd5506c959c" class="bulleted-list"><li style="list-style-type:disc">id: integer (unique identifier for the product variant)</li></ul><ul id="b7c23b3f-3aed-4635-8eb2-f5e2dbb81fa3" class="bulleted-list"><li style="list-style-type:disc">product_id: integer (foreign key referencing the Product entity)</li></ul><ul id="83e6bc20-b52d-458f-b184-600c00ed007e" class="bulleted-list"><li style="list-style-type:disc">name: string (name or description of the variant, e.g., color, size)</li></ul><ul id="b6c3d64d-9620-41c1-9959-ec8cac4bc478" class="bulleted-list"><li style="list-style-type:disc">price: decimal (price of the variant, can override the default product price)</li></ul><ul id="b7a6ff1d-7ca4-4797-98e3-bf1568869d9c" class="bulleted-list"><li style="list-style-type:disc">created_at: datetime (timestamp indicating when the variant was created)</li></ul><ul id="3f80390d-3517-4f67-a351-76873d6b8c8c" class="bulleted-list"><li style="list-style-type:disc">updated_at: datetime (timestamp indicating when the variant was last updated)</li></ul><ul id="1e05f3b3-978c-44e6-9bf3-929c61d780c4" class="toggle"><li><details open=""><summary>Sample Data:</summary><pre id="db101adb-89e0-4e87-8c4e-9974b0d3b1a4" class="code"><code>[
+  {
+    &quot;id&quot;: 1,
+    &quot;product_id&quot;: 1,
+    &quot;name&quot;: &quot;Color: Red&quot;,
+    &quot;price&quot;: 1300.00,
+    &quot;created_at&quot;: &quot;2023-07-16T08:30:00Z&quot;,
+    &quot;updated_at&quot;: &quot;2023-07-16T09:00:00Z&quot;
+  },
+  {
+    &quot;id&quot;: 2,
+    &quot;product_id&quot;: 1,
+    &quot;name&quot;: &quot;Color: Blue&quot;,
+    &quot;price&quot;: 1350.00,
+    &quot;created_at&quot;: &quot;2023-07-16T09:15:00Z&quot;,
+    &quot;updated_at&quot;: &quot;2023-07-16T09:15:00Z&quot;
+  },
+  {
+    &quot;id&quot;: 3,
+    &quot;product_id&quot;: 2,
+    &quot;name&quot;: &quot;Size: 64GB&quot;,
+    &quot;price&quot;: 800.00,
+    &quot;created_at&quot;: &quot;2023-07-16T10:30:00Z&quot;,
+    &quot;updated_at&quot;: &quot;2023-07-16T10:45:00Z&quot;
+  }
+]</code></pre></details></li></ul><h2 id="c213c382-dfc2-4ae7-8c9b-d041131b6872" class="">ProductImage:</h2><ul id="b2b5e732-39c8-4626-949e-bc14a1f81eeb" class="bulleted-list"><li style="list-style-type:disc">id: integer (unique identifier for the product image)</li></ul><ul id="c03950ec-c732-44ec-8596-94862dfb35a5" class="bulleted-list"><li style="list-style-type:disc">product_id: integer (foreign key referencing the Product entity)</li></ul><ul id="3ffe0af6-d7cd-4b10-9c03-f4de2a157424" class="bulleted-list"><li style="list-style-type:disc">image_url: string (URL or file path to the image)</li></ul><ul id="3eb38aa0-633a-4681-bfa8-a8f1a7de40f9" class="bulleted-list"><li style="list-style-type:disc">created_at: datetime (timestamp indicating when the image was created)</li></ul><ul id="1715529e-082b-429f-8099-7ab810ae846c" class="bulleted-list"><li style="list-style-type:disc">updated_at: datetime (timestamp indicating when the image was last updated)</li></ul><ul id="b06fc569-b4c1-4986-8869-8bb2cd7687a6" class="toggle"><li><details open=""><summary>Sample Data:</summary><pre id="6fb96dad-2a9e-450d-af15-f5108d3b0f03" class="code"><code>[
+  {
+    &quot;id&quot;: 1,
+    &quot;product_id&quot;: 1,
+    &quot;image_url&quot;: &quot;http://example.com/images/product1_1.jpg&quot;,
+    &quot;created_at&quot;: &quot;2023-07-16T11:00:00Z&quot;,
+    &quot;updated_at&quot;: &quot;2023-07-16T11:00:00Z&quot;
+  },
+  {
+    &quot;id&quot;: 2,
+    &quot;product_id&quot;: 1,
+    &quot;image_url&quot;: &quot;http://example.com/images/product1_2.jpg&quot;,
+    &quot;created_at&quot;: &quot;2023-07-16T11:30:00Z&quot;,
+    &quot;updated_at&quot;: &quot;2023-07-16T11:30:00Z&quot;
+  },
+  {
+    &quot;id&quot;: 3,
+    &quot;product_id&quot;: 2,
+    &quot;image_url&quot;: &quot;http://example.com/images/product2_1.jpg&quot;,
+    &quot;created_at&quot;: &quot;2023-07-16T12:00:00Z&quot;,
+    &quot;updated_at&quot;: &quot;2023-07-16T12:00:00Z&quot;
+  }
+]</code></pre></details></li></ul><h2 id="c4f5cf1d-0fe8-4949-aef6-3857fdb32b8b" class="">Order:</h2><ul id="6013de76-d8a7-4f98-ac7d-a1f5e62d2380" class="bulleted-list"><li style="list-style-type:disc">id: integer (unique identifier for the order)</li></ul><ul id="08f04de6-9b92-45b6-9035-033a4042d776" class="bulleted-list"><li style="list-style-type:disc">user_id: integer (foreign key referencing the User entity)</li></ul><ul id="7533550f-6f0a-4627-b13d-7244f0fca6bf" class="bulleted-list"><li style="list-style-type:disc">status: string (status of the order, e.g., &quot;pending&quot;, &quot;completed&quot;, &quot;cancelled&quot;)</li></ul><ul id="70277381-bbd7-4aca-b4e4-67d4672e3e2c" class="bulleted-list"><li style="list-style-type:disc">total_amount: decimal (total amount of the order)</li></ul><ul id="ed824847-d8af-41be-8c75-cfbf994f97f7" class="bulleted-list"><li style="list-style-type:disc">shipping_address: integer (foreign key referencing the ShippingAddress entity)</li></ul><ul id="69fa7a60-55c8-4825-ae58-556d62a1ac3f" class="bulleted-list"><li style="list-style-type:disc">created_at: datetime (timestamp indicating when the order was created)</li></ul><ul id="792c73ba-6bc0-4c5a-bd36-b61bc8839116" class="bulleted-list"><li style="list-style-type:disc">updated_at: datetime (timestamp indicating when the order was last updated)</li></ul><ul id="eda1b7ab-653f-4f27-8614-dca97a865d99" class="toggle"><li><details open=""><summary>Sample Data:</summary><pre id="3669cd9b-1918-4820-95c3-6a9a746d1492" class="code"><code>[
+  {
+    &quot;id&quot;: 701,
+    &quot;user_id&quot;: 101,
+    &quot;status&quot;: &quot;completed&quot;,
+    &quot;total_amount&quot;: 2999.70,
+    &quot;created_at&quot;: &quot;2023-07-16T14:00:00Z&quot;,
+    &quot;updated_at&quot;: &quot;2023-07-16T14:30:00Z&quot;
+  },
+  {
+    &quot;id&quot;: 702,
+    &quot;user_id&quot;: 102,
+    &quot;status&quot;: &quot;pending&quot;,
+    &quot;total_amount&quot;: 1599.95,
+    &quot;created_at&quot;: &quot;2023-07-15T16:30:00Z&quot;,
+    &quot;updated_at&quot;: &quot;2023-07-16T09:45:00Z&quot;
+  }
+]</code></pre></details></li></ul><h2 id="98e06e04-6502-44d3-8d53-00db011ab4d9" class="">OrderItem:</h2><ul id="24fc9651-858d-4c99-b7c3-2c6df261f832" class="bulleted-list"><li style="list-style-type:disc">id: integer (unique identifier for the order item)</li></ul><ul id="97e3a69d-9f02-4424-99c1-60b942ccbec2" class="bulleted-list"><li style="list-style-type:disc">order_id: integer (foreign key referencing the Order entity)</li></ul><ul id="4c99f093-72de-4342-bd80-a7943a3a9e42" class="bulleted-list"><li style="list-style-type:disc">product_id: integer (foreign key referencing the Product entity)</li></ul><ul id="bff2f9e0-06ae-493a-89a8-593106549275" class="bulleted-list"><li style="list-style-type:disc">quantity: integer (quantity of the product in the order)</li></ul><ul id="819caf7a-f12d-4c22-a295-e19ad868207b" class="bulleted-list"><li style="list-style-type:disc">price: decimal (price of the product at the time of the order)</li></ul><ul id="00b7ddaa-6acb-4772-869f-f838b7974015" class="bulleted-list"><li style="list-style-type:disc">created_at: datetime (timestamp indicating when the order item was created)</li></ul><ul id="3bca156a-a3e4-4c4b-baf0-188fdca3648c" class="bulleted-list"><li style="list-style-type:disc">updated_at: datetime (timestamp indicating when the order item was last updated)</li></ul><ul id="7b202d96-8bdb-4f51-b048-e599642ac3d2" class="toggle"><li><details open=""><summary>Sample Data:</summary><pre id="ec1326f9-32a7-4128-81c0-1301971459bf" class="code"><code>[
+  {
+    &quot;id&quot;: 801,
+    &quot;order_id&quot;: 701,
+    &quot;product_id&quot;: 201,
+    &quot;quantity&quot;: 2,
+    &quot;price&quot;: 999.99,
+    &quot;created_at&quot;: &quot;2023-07-16T14:00:00Z&quot;,
+    &quot;updated_at&quot;: &quot;2023-07-16T14:30:00Z&quot;
+  },
+  {
+    &quot;id&quot;: 802,
+    &quot;order_id&quot;: 701,
+    &quot;product_id&quot;: 202,
+    &quot;quantity&quot;: 1,
+    &quot;price&quot;: 799.99,
+    &quot;created_at&quot;: &quot;2023-07-16T14:15:00Z&quot;,
+    &quot;updated_at&quot;: &quot;2023-07-16T14:15:00Z&quot;
+  },
+  {
+    &quot;id&quot;: 803,
+    &quot;order_id&quot;: 702,
+    &quot;product_id&quot;: 201,
+    &quot;quantity&quot;: 3,
+    &quot;price&quot;: 999.99,
+    &quot;created_at&quot;: &quot;2023-07-15T16:30:00Z&quot;,
+    &quot;updated_at&quot;: &quot;2023-07-15T16:30:00Z&quot;
+  }
+]</code></pre></details></li></ul><h2 id="14595577-ad8d-4891-804c-c063ddfc2a97" class="">Address:</h2><ul id="a1be03a4-2926-478b-87cf-e5a4482ce48c" class="bulleted-list"><li style="list-style-type:disc">id: integer (unique identifier for the delivery address)</li></ul><ul id="414efaa3-f95a-4138-947e-ded1d8d45d41" class="bulleted-list"><li style="list-style-type:disc">user_id: integer (foreign key referencing the User entity)</li></ul><ul id="f21b0142-32d2-449b-b389-f0a31c50e2fd" class="bulleted-list"><li style="list-style-type:disc">address_line1: string (first line of the shipping address)</li></ul><ul id="ae72f8da-1d16-4346-a578-7a5502e0d821" class="bulleted-list"><li style="list-style-type:disc">address_line2: string (second line of the shipping address, optional)</li></ul><ul id="892e6239-efac-487a-868b-f8d1d972cfea" class="bulleted-list"><li style="list-style-type:disc">city: string (city of the shipping address)</li></ul><ul id="1bddad76-5366-454c-bda5-0cf79f9d61bc" class="bulleted-list"><li style="list-style-type:disc">state: string (state or province of the shipping address)</li></ul><ul id="6dd7c939-be02-4df1-9a3c-fc5dfc632d7f" class="bulleted-list"><li style="list-style-type:disc">country: string (country of the shipping address)</li></ul><ul id="ca7d015e-5284-4eee-9aa7-b5ee9d9464b3" class="bulleted-list"><li style="list-style-type:disc">postal_code: string (postal code or ZIP code of the shipping address)</li></ul><ul id="14327b7b-2c72-43fb-b893-8ed65cd4a443" class="bulleted-list"><li style="list-style-type:disc">created_at: datetime (timestamp indicating when the shipping address was created)</li></ul><ul id="83e89c63-4e52-4f12-85e1-558324453665" class="bulleted-list"><li style="list-style-type:disc">updated_at: datetime (timestamp indicating when the shipping address was last updated)</li></ul><ul id="e96bca74-8af6-48f9-8c59-ac52db25aba5" class="toggle"><li><details open=""><summary>Sample Data:</summary><pre id="0d7cf9d9-8e56-450b-9939-6de74706cc45" class="code"><code>[
+  {
+    &quot;id&quot;: 901,
+    &quot;user_id&quot;: 101,
+    &quot;address_line1&quot;: &quot;123 Main Street&quot;,
+    &quot;address_line2&quot;: &quot;Apt 4B&quot;,
+    &quot;city&quot;: &quot;New York&quot;,
+    &quot;state&quot;: &quot;NY&quot;,
+    &quot;country&quot;: &quot;USA&quot;,
+    &quot;postal_code&quot;: &quot;10001&quot;,
+    &quot;created_at&quot;: &quot;2023-07-16T08:00:00Z&quot;,
+    &quot;updated_at&quot;: &quot;2023-07-16T08:30:00Z&quot;
+  },
+  {
+    &quot;id&quot;: 902,
+    &quot;user_id&quot;: 102,
+    &quot;address_line1&quot;: &quot;456 Maple Avenue&quot;,
+    &quot;city&quot;: &quot;Los Angeles&quot;,
+    &quot;state&quot;: &quot;CA&quot;,
+    &quot;country&quot;: &quot;USA&quot;,
+    &quot;postal_code&quot;: &quot;90001&quot;,
+    &quot;created_at&quot;: &quot;2023-07-15T09:15:00Z&quot;,
+    &quot;updated_at&quot;: &quot;2023-07-16T09:45:00Z&quot;
+  }
+]</code></pre></details></li></ul><h2 id="a8e7edd5-356d-412f-8c38-4af7a56f8955" class="">Payment:</h2><ul id="5d7a8aab-8f28-4e9a-b6e4-4929170cb683" class="bulleted-list"><li style="list-style-type:disc">id: integer (unique identifier for the payment)</li></ul><ul id="6488c62b-f925-458a-b56a-f47d85e12f2b" class="bulleted-list"><li style="list-style-type:disc">order_id: integer (foreign key referencing the Order entity)</li></ul><ul id="5b77cfd4-3254-4a39-b40f-9fbd97bd9bd0" class="bulleted-list"><li style="list-style-type:disc">amount: decimal (amount of the payment)</li></ul><ul id="255816c2-ac07-4b06-a66d-7d5a46c957b9" class="bulleted-list"><li style="list-style-type:disc">currency: string (currency code, e.g., &quot;USD&quot;, &quot;EUR&quot;)</li></ul><ul id="89b189b8-3174-439c-9a6c-37c355ef3d54" class="bulleted-list"><li style="list-style-type:disc">status: string (status of the payment, e.g., &quot;pending&quot;, &quot;completed&quot;, &quot;failed&quot;)</li></ul><ul id="a4eda1c7-9602-4872-91d4-49270f55276f" class="bulleted-list"><li style="list-style-type:disc">transaction_id: integer (transaction identifier provided by the payment gateway)</li></ul><ul id="a6fddf42-48bc-463f-89ff-5a5615853d65" class="bulleted-list"><li style="list-style-type:disc">created_at: datetime (timestamp indicating when the payment was created)</li></ul><ul id="aeb39604-c442-4a6b-a113-588cc4194f4e" class="bulleted-list"><li style="list-style-type:disc">updated_at: datetime (timestamp indicating when the payment was last updated)</li></ul><ul id="aa162536-433e-4b5b-b150-5eba13a91e26" class="toggle"><li><details open=""><summary>Sample Data:</summary><pre id="a81a9e54-51b0-43db-948f-1e990febf807" class="code"><code>[
+  {
+    &quot;id&quot;: 1001,
+    &quot;order_id&quot;: 701,
+    &quot;amount&quot;: 2999.70,
+    &quot;currency&quot;: &quot;USD&quot;,
+    &quot;status&quot;: &quot;completed&quot;,
+    &quot;transaction_id&quot;: 123456,
+    &quot;created_at&quot;: &quot;2023-07-16T14:00:00Z&quot;,
+    &quot;updated_at&quot;: &quot;2023-07-16T14:30:00Z&quot;
+  },
+  {
+    &quot;id&quot;: 1002,
+    &quot;order_id&quot;: 702,
+    &quot;amount&quot;: 1599.95,
+    &quot;currency&quot;: &quot;EUR&quot;,
+    &quot;status&quot;: &quot;completed&quot;,
+    &quot;transaction_id&quot;: 789012,
+    &quot;created_at&quot;: &quot;2023-07-15T16:30:00Z&quot;,
+    &quot;updated_at&quot;: &quot;2023-07-16T09:45:00Z&quot;
+  }
+]</code></pre></details></li></ul><h2 id="1c6b9851-624f-4540-b10c-82dc871725e8" class="">Transaction:</h2><ul id="e97b809a-a287-4efd-b97f-8ba6ab5c1e30" class="bulleted-list"><li style="list-style-type:disc">id: integer (unique identifier for the transaction)</li></ul><ul id="a46a5e71-869d-4eaf-8c3e-ad61ed9b9f6c" class="bulleted-list"><li style="list-style-type:disc">payment_id: integer (foreign key referencing the Payment entity)</li></ul><ul id="8a45b812-c295-4ef2-a388-1d29677fb07b" class="bulleted-list"><li style="list-style-type:disc">transaction_type: string (type of transaction, e.g., &quot;authorization&quot;, &quot;capture&quot;, &quot;refund&quot;)</li></ul><ul id="8f4ee702-e6fa-4b51-820f-9312ddb4decb" class="bulleted-list"><li style="list-style-type:disc">amount: decimal (amount of the transaction)</li></ul><ul id="0f0c370a-faa7-4c5d-a409-ce733753c8af" class="bulleted-list"><li style="list-style-type:disc">status: string (status of the transaction, e.g., &quot;pending&quot;, &quot;completed&quot;, &quot;failed&quot;)</li></ul><ul id="2d25d8cd-0738-4fb5-94b7-9a57d15bb4ec" class="bulleted-list"><li style="list-style-type:disc">created_at: datetime (timestamp indicating when the transaction was created)</li></ul><ul id="2c53e65d-b1bd-4128-8293-f8405cf9606e" class="bulleted-list"><li style="list-style-type:disc">updated_at: datetime (timestamp indicating when the transaction was last updated)</li></ul><ul id="abd93514-6722-4979-83c7-5678ea5b3d9e" class="toggle"><li><details open=""><summary>Sample Data:</summary><pre id="129ff233-1097-4dc9-8ab9-af80cbd5d53c" class="code"><code>[
+  {
+    &quot;id&quot;: 3001,
+    &quot;payment_id&quot;: 1001,
+    &quot;transaction_type&quot;: &quot;credit_card&quot;,
+    &quot;amount&quot;: 500.00,
+    &quot;status&quot;: &quot;completed&quot;,
+    &quot;created_at&quot;: &quot;2023-07-16T14:00:00Z&quot;,
+    &quot;updated_at&quot;: &quot;2023-07-16T14:30:00Z&quot;
+  },
+  {
+    &quot;id&quot;: 3002,
+    &quot;payment_id&quot;: 1002,
+    &quot;transaction_type&quot;: &quot;cash&quot;,
+    &quot;amount&quot;: 250.00,
+    &quot;status&quot;: &quot;completed&quot;,
+    &quot;created_at&quot;: &quot;2023-07-15T16:30:00Z&quot;,
+    &quot;updated_at&quot;: &quot;2023-07-16T09:45:00Z&quot;
+  }
+]</code></pre></details></li></ul><h2 id="d96cd98e-1116-4ea8-ac48-02e5723a50ea" class="">ShippingAddress:</h2><ul id="575366f1-194a-45e3-9968-bc35a6b2a813" class="bulleted-list"><li style="list-style-type:disc">id: integer (unique identifier for the shipping address)</li></ul><ul id="fc8e6e4b-54b1-4b7a-89c8-361cd2c97b7f" class="bulleted-list"><li style="list-style-type:disc">user_id: integer (foreign key referencing the User entity)</li></ul><ul id="1967cd7b-b5b3-406e-b41d-0a139673af00" class="bulleted-list"><li style="list-style-type:disc">address_line1: string (first line of the shipping address)</li></ul><ul id="9de925b0-ba8e-4677-b76e-269ae632f5e2" class="bulleted-list"><li style="list-style-type:disc">address_line2: string (second line of the shipping address, optional)</li></ul><ul id="d14e2306-df4a-4cca-ae6d-d2783d7e1767" class="bulleted-list"><li style="list-style-type:disc">city: string (city of the shipping address)</li></ul><ul id="87fdf2c8-64d8-4896-9071-6efca048c671" class="bulleted-list"><li style="list-style-type:disc">state: string (state or province of the shipping address)</li></ul><ul id="cc5fa83b-1372-4f6f-a3b6-bff79119c487" class="bulleted-list"><li style="list-style-type:disc">country: string (country of the shipping address)</li></ul><ul id="70dc416f-78dc-47a3-bd29-8857302b8754" class="bulleted-list"><li style="list-style-type:disc">postal_code: string (postal code or ZIP code of the shipping address)</li></ul><ul id="48fd3135-1081-4361-8c5e-86fed3f3396e" class="bulleted-list"><li style="list-style-type:disc">created_at: datetime (timestamp indicating when the shipping address was created)</li></ul><ul id="b7cf3374-61f4-4fe6-919e-bdc262199e5a" class="bulleted-list"><li style="list-style-type:disc">updated_at: datetime (timestamp indicating when the shipping address was last updated)</li></ul><ul id="a4ebd871-81d0-4c6a-9147-94b88160d391" class="toggle"><li><details open=""><summary>Sample Data:</summary><pre id="b843b76d-d090-4d75-af6a-7dae4acd30d2" class="code"><code>[
+  {
+    &quot;id&quot;: 5001,
+    &quot;user_id&quot;: 101,
+    &quot;address_line1&quot;: &quot;789 Elm Street&quot;,
+    &quot;address_line2&quot;: &quot;Suite 10&quot;,
+    &quot;city&quot;: &quot;Chicago&quot;,
+    &quot;state&quot;: &quot;IL&quot;,
+    &quot;country&quot;: &quot;USA&quot;,
+    &quot;postal_code&quot;: &quot;60601&quot;,
+    &quot;created_at&quot;: &quot;2023-07-16T14:00:00Z&quot;,
+    &quot;updated_at&quot;: &quot;2023-07-16T14:30:00Z&quot;
+  },
+  {
+    &quot;id&quot;: 5002,
+    &quot;user_id&quot;: 102,
+    &quot;address_line1&quot;: &quot;321 Oak Avenue&quot;,
+    &quot;city&quot;: &quot;San Francisco&quot;,
+    &quot;state&quot;: &quot;CA&quot;,
+    &quot;country&quot;: &quot;USA&quot;,
+    &quot;postal_code&quot;: &quot;94102&quot;,
+    &quot;created_at&quot;: &quot;2023-07-15T16:30:00Z&quot;,
+    &quot;updated_at&quot;: &quot;2023-07-16T09:45:00Z&quot;
+  }
+]</code></pre></details></li></ul><h2 id="0fc2c821-85c5-46d2-827c-0f5cd67e3738" class="">Shipment:</h2><ul id="eb75a3f5-a72a-4a51-80c6-486bf3ba82df" class="bulleted-list"><li style="list-style-type:disc">id: integer (unique identifier for the shipment)</li></ul><ul id="963638c5-ae81-4360-a858-99e30f652e92" class="bulleted-list"><li style="list-style-type:disc">order_id: integer (foreign key referencing the Order entity)</li></ul><ul id="ebda2fa8-83e5-49ec-b355-4330f741f0ff" class="bulleted-list"><li style="list-style-type:disc">carrier: string (name of the shipping carrier)</li></ul><ul id="c5c31277-498c-46d2-a800-0d01d55de1b2" class="bulleted-list"><li style="list-style-type:disc">tracking_number: string (tracking number assigned by the carrier)</li></ul><ul id="800fc993-fd4b-4b98-98ad-56002e73e9d2" class="bulleted-list"><li style="list-style-type:disc">status: string (status of the shipment, e.g., &quot;pending&quot;, &quot;in transit&quot;, &quot;delivered&quot;)</li></ul><ul id="529855db-4591-44fe-b821-4392db199042" class="bulleted-list"><li style="list-style-type:disc">created_at: datetime (timestamp indicating when the shipment was created)</li></ul><ul id="6b2ab588-2bcc-4f85-95ac-2083ac60df49" class="bulleted-list"><li style="list-style-type:disc">updated_at: datetime (timestamp indicating when the shipment was last updated)</li></ul><ul id="d3518c8f-fc73-4b56-bea6-2c1e28d14fa3" class="toggle"><li><details open=""><summary>Sample Data:</summary><pre id="df1e14f8-a080-462f-b949-37d1643d3fb7" class="code"><code>[
+  {
+    &quot;id&quot;: 4001,
+    &quot;order_id&quot;: 701,
+    &quot;carrier&quot;: &quot;UPS&quot;,
+    &quot;tracking_number&quot;: &quot;1Z1234567890123456&quot;,
+    &quot;status&quot;: &quot;pending&quot;,
+    &quot;created_at&quot;: &quot;2023-07-16T14:00:00Z&quot;,
+    &quot;updated_at&quot;: &quot;2023-07-16T14:30:00Z&quot;
+  },
+  {
+    &quot;id&quot;: 4002,
+    &quot;order_id&quot;: 702,
+    &quot;carrier&quot;: &quot;FedEx&quot;,
+    &quot;tracking_number&quot;: &quot;999999999999&quot;,
+    &quot;status&quot;: &quot;in transit&quot;,
+    &quot;created_at&quot;: &quot;2023-07-15T16:30:00Z&quot;,
+    &quot;updated_at&quot;: &quot;2023-07-16T09:45:00Z&quot;
+  }
+]</code></pre></details></li></ul><h2 id="b538d65f-76d5-438c-84da-33051cb59e1b" class="">Review:</h2><ul id="57d5d3a8-61f5-4ac6-b354-b456e32d8767" class="bulleted-list"><li style="list-style-type:disc">id: integer (unique identifier for the review)</li></ul><ul id="ef7b2c6d-aa07-46f0-b8dc-80a0a4b1bbd1" class="bulleted-list"><li style="list-style-type:disc">user_id: integer (foreign key referencing the User entity)</li></ul><ul id="f090a9a5-a764-49df-a744-45a4bcec95bd" class="bulleted-list"><li style="list-style-type:disc">product_id: integer (foreign key referencing the Product entity)</li></ul><ul id="c814de17-b885-4998-90a1-676ede27bf52" class="bulleted-list"><li style="list-style-type:disc">rating: decimal (rating given by the user, e.g., on a scale of 1 to 5)</li></ul><ul id="2c517825-3281-41a1-96f1-7e13a2ce1465" class="bulleted-list"><li style="list-style-type:disc">title: string (title of the review)</li></ul><ul id="1d176139-4cc8-4a8b-90e5-263d859268ac" class="bulleted-list"><li style="list-style-type:disc">comment: string (optional comment or review text)</li></ul><ul id="52f9a830-51cb-48de-aafa-6d9f7fc2a72b" class="bulleted-list"><li style="list-style-type:disc">created_at: datetime (timestamp indicating when the review was created)</li></ul><ul id="bcd9907c-d67f-4c94-914c-bea3cd6c681b" class="bulleted-list"><li style="list-style-type:disc">updated_at: datetime (timestamp indicating when the review was last updated)</li></ul><ul id="67383f0c-ed65-4de2-a99a-86e92136b194" class="toggle"><li><details open=""><summary>Sample Data:</summary><pre id="09d74f18-8763-4c88-ab06-75b4c55802e2" class="code"><code>[
+  {
+    &quot;id&quot;: 6001,
+    &quot;user_id&quot;: 101,
+    &quot;product_id&quot;: 201,
+    &quot;rating&quot;: 4.5,
+    &quot;title&quot;: &quot;Great Product!&quot;,
+    &quot;comment&quot;: &quot;I&#x27;m very satisfied with this product. It works perfectly.&quot;,
+    &quot;created_at&quot;: &quot;2023-07-16T14:00:00Z&quot;,
+    &quot;updated_at&quot;: &quot;2023-07-16T14:30:00Z&quot;
+  },
+  {
+    &quot;id&quot;: 6002,
+    &quot;user_id&quot;: 102,
+    &quot;product_id&quot;: 202,
+    &quot;rating&quot;: 3.8,
+    &quot;title&quot;: &quot;Decent Product&quot;,
+    &quot;comment&quot;: &quot;The product is good, but I expected better performance.&quot;,
+    &quot;created_at&quot;: &quot;2023-07-15T16:30:00Z&quot;,
+    &quot;updated_at&quot;: &quot;2023-07-16T09:45:00Z&quot;
+  }
+]</code></pre></details></li></ul><h2 id="63986806-4236-49a6-8019-c17700fbc6cc" class="">Comment:</h2><ul id="fbe642a0-0ae5-4edc-bf9c-756597424f97" class="bulleted-list"><li style="list-style-type:disc">id: integer (unique identifier for the comment)</li></ul><ul id="2ef1ea14-817b-49a6-a516-adcfe993be2c" class="bulleted-list"><li style="list-style-type:disc">review_id: integer (foreign key referencing the Review entity)</li></ul><ul id="0dd74ade-10d5-44e0-ae65-c58e1d116eff" class="bulleted-list"><li style="list-style-type:disc">user_id: integer (foreign key referencing the User entity)</li></ul><ul id="5982bf02-7069-4398-b883-c1a1e25bdc07" class="bulleted-list"><li style="list-style-type:disc">text: string (comment text)</li></ul><ul id="75b88915-2686-495f-bcd5-564de3f98fb2" class="bulleted-list"><li style="list-style-type:disc">created_at: datetime (timestamp indicating when the comment was created)</li></ul><ul id="410dc08f-6cfe-4820-b04a-05c82878b266" class="bulleted-list"><li style="list-style-type:disc">updated_at: datetime (timestamp indicating when the comment was last updated)</li></ul><ul id="8c759902-d834-46b7-b2cd-40a76a9dccfd" class="toggle"><li><details open=""><summary>Sample Data:</summary><pre id="0eaefa3f-a4f2-4409-8fa2-796c0c743574" class="code"><code>[
+  {
+    &quot;id&quot;: 7001,
+    &quot;review_id&quot;: 6001,
+    &quot;user_id&quot;: 101,
+    &quot;text&quot;: &quot;I agree with this review. The product is indeed great!&quot;,
+    &quot;created_at&quot;: &quot;2023-07-16T14:30:00Z&quot;,
+    &quot;updated_at&quot;: &quot;2023-07-16T14:30:00Z&quot;
+  },
+  {
+    &quot;id&quot;: 7002,
+    &quot;review_id&quot;: 6001,
+    &quot;user_id&quot;: 103,
+    &quot;text&quot;: &quot;I have a different opinion. The product didn&#x27;t meet my expectations.&quot;,
+    &quot;created_at&quot;: &quot;2023-07-16T15:00:00Z&quot;,
+    &quot;updated_at&quot;: &quot;2023-07-16T15:00:00Z&quot;
+  },
+  {
+    &quot;id&quot;: 7003,
+    &quot;review_id&quot;: 6002,
+    &quot;user_id&quot;: 102,
+    &quot;text&quot;: &quot;I had a similar experience. It&#x27;s a decent product, but not outstanding.&quot;,
+    &quot;created_at&quot;: &quot;2023-07-15T17:30:00Z&quot;,
+    &quot;updated_at&quot;: &quot;2023-07-15T17:30:00Z&quot;
+  }
+]</code></pre></details></li></ul><h2 id="c85696bb-41b6-4e1e-8b4a-19c1c687bcc2" class="">Like:</h2><ul id="11e5a402-4361-4ffe-bb5b-d08f62500ece" class="bulleted-list"><li style="list-style-type:disc">id: integer (unique identifier for the like)</li></ul><ul id="8c92475b-ac13-4444-b851-e4158dda0617" class="bulleted-list"><li style="list-style-type:disc">user_id: integer (foreign key referencing the User entity)</li></ul><ul id="4832c23f-538c-4c56-a824-3338de3ad740" class="bulleted-list"><li style="list-style-type:disc">review_id: integer (foreign key referencing the Review entity)</li></ul><ul id="fd2960ee-533a-48fc-bc6c-3bc1bd43d419" class="bulleted-list"><li style="list-style-type:disc">created_at: datetime (timestamp indicating when the like was created)</li></ul><ul id="248fb4f7-bf79-4f5d-9bf8-d137404bfefe" class="bulleted-list"><li style="list-style-type:disc">updated_at: datetime (timestamp indicating when the like was last updated)</li></ul><ul id="f3bb72c6-b6d7-4c06-99b4-24c11889e2bc" class="toggle"><li><details open=""><summary>Sample Data:</summary><pre id="45392e49-8ca3-49bc-a74e-bc70c6d11abf" class="code"><code>[
+  {
+    &quot;id&quot;: 8001,
+    &quot;user_id&quot;: 101,
+    &quot;review_id&quot;: 6001,
+    &quot;created_at&quot;: &quot;2023-07-16T14:30:00Z&quot;,
+    &quot;updated_at&quot;: &quot;2023-07-16T14:30:00Z&quot;
+  },
+  {
+    &quot;id&quot;: 8002,
+    &quot;user_id&quot;: 103,
+    &quot;review_id&quot;: 6001,
+    &quot;created_at&quot;: &quot;2023-07-16T15:00:00Z&quot;,
+    &quot;updated_at&quot;: &quot;2023-07-16T15:00:00Z&quot;
+  },
+  {
+    &quot;id&quot;: 8003,
+    &quot;user_id&quot;: 102,
+    &quot;review_id&quot;: 6002,
+    &quot;created_at&quot;: &quot;2023-07-15T17:30:00Z&quot;,
+    &quot;updated_at&quot;: &quot;2023-07-15T17:30:00Z&quot;
+  }
+]</code></pre></details></li></ul><h2 id="eea02343-78d1-4cac-bf10-fe968f921106" class="">InventoryItem:</h2><ul id="35d8a105-af74-4cf9-8f97-e6130c1eda86" class="bulleted-list"><li style="list-style-type:disc">id: integer (unique identifier for the inventory item)</li></ul><ul id="7ab2a8a2-cde8-4ea2-91e2-49e04bc39607" class="bulleted-list"><li style="list-style-type:disc">product_id: integer (foreign key referencing the Product entity)</li></ul><ul id="075627fd-da67-4971-9393-a1164881a89c" class="bulleted-list"><li style="list-style-type:disc">quantity: integer (current quantity of the product in stock)</li></ul><ul id="e364f0fb-b1a5-43dc-b71b-0ab9c01a4ff0" class="bulleted-list"><li style="list-style-type:disc">minimum_stock: integer (minimum stock threshold for the product)</li></ul><ul id="12235eb3-d526-4799-8dc3-dd42a62cc01e" class="bulleted-list"><li style="list-style-type:disc">created_at: datetime (timestamp indicating when the inventory item was created)</li></ul><ul id="05de1fb4-c4f2-4692-96a7-034b1727ae62" class="bulleted-list"><li style="list-style-type:disc">updated_at: datetime (timestamp indicating when the inventory item was last updated)</li></ul><ul id="e36ba073-70d4-462a-b957-1c8485cefcd9" class="toggle"><li><details open=""><summary>Sample Data:</summary><pre id="483bde1d-af9f-440e-a94f-048f35111bda" class="code"><code>[
+  {
+    &quot;id&quot;: 9001,
+    &quot;product_id&quot;: 201,
+    &quot;quantity&quot;: 100,
+    &quot;minimum_stock&quot;: 20,
+    &quot;created_at&quot;: &quot;2023-07-16T14:00:00Z&quot;,
+    &quot;updated_at&quot;: &quot;2023-07-16T14:30:00Z&quot;
+  },
+  {
+    &quot;id&quot;: 9002,
+    &quot;product_id&quot;: 202,
+    &quot;quantity&quot;: 50,
+    &quot;minimum_stock&quot;: 10,
+    &quot;created_at&quot;: &quot;2023-07-15T16:30:00Z&quot;,
+    &quot;updated_at&quot;: &quot;2023-07-16T09:45:00Z&quot;
+  }
+]</code></pre></details></li></ul><h2 id="b3dab710-483f-4055-a897-5fdb94187e4d" class="">Supplier:</h2><ul id="c4750116-ee3d-4ac7-b63c-efcb03eb3cd2" class="bulleted-list"><li style="list-style-type:disc">id: integer (unique identifier for the supplier)</li></ul><ul id="4d53dfd5-ab0b-4655-98bd-ed0c02b56d38" class="bulleted-list"><li style="list-style-type:disc">name: string (name of the supplier)</li></ul><ul id="278f248b-c7e3-4e81-91d6-5a411a0f3645" class="bulleted-list"><li style="list-style-type:disc">email: string (email address of the supplier)</li></ul><ul id="21d598c9-f1c3-48fa-8cc8-41f8f2be0da8" class="bulleted-list"><li style="list-style-type:disc">created_at: datetime (timestamp indicating when the supplier was created)</li></ul><ul id="0ffa3f2b-22c9-4061-91e6-8f36a222a356" class="bulleted-list"><li style="list-style-type:disc">updated_at: datetime (timestamp indicating when the supplier was last updated)</li></ul><ul id="3bf5a985-081f-4a70-82d4-3d0479442032" class="toggle"><li><details open=""><summary>Sample Data:</summary><pre id="ad0cf646-6981-43bf-a92c-33585a867615" class="code"><code>[
+  {
+    &quot;id&quot;: 10001,
+    &quot;name&quot;: &quot;ABC Electronics&quot;,
+    &quot;email&quot;: &quot;abc@example.com&quot;,
+    &quot;created_at&quot;: &quot;2023-07-16T14:00:00Z&quot;,
+    &quot;updated_at&quot;: &quot;2023-07-16T14:30:00Z&quot;
+  },
+  {
+    &quot;id&quot;: 10002,
+    &quot;name&quot;: &quot;XYZ Supplies&quot;,
+    &quot;email&quot;: &quot;xyz@example.com&quot;,
+    &quot;created_at&quot;: &quot;2023-07-15T16:30:00Z&quot;,
+    &quot;updated_at&quot;: &quot;2023-07-16T09:45:00Z&quot;
+  }
+]</code></pre></details></li></ul><h2 id="73d7c113-ba3e-4bf5-b5d4-98388ad21a5b" class="">PurchaseOrder:</h2><ul id="c573917d-3734-4936-8d3c-e43ab7d76030" class="bulleted-list"><li style="list-style-type:disc">id: integer (unique identifier for the purchase order)</li></ul><ul id="9623d303-dbd8-4c0b-8769-03b682118769" class="bulleted-list"><li style="list-style-type:disc">supplier_id: integer (foreign key referencing the Supplier entity)</li></ul><ul id="f53941af-96a6-46d3-8662-f99994b6dc89" class="bulleted-list"><li style="list-style-type:disc">product_id: integer (foreign key referencing the Product entity)</li></ul><ul id="d2208e9e-2f92-4ebc-b627-a50293a4ff91" class="bulleted-list"><li style="list-style-type:disc">quantity: integer (quantity of the product to be ordered)</li></ul><ul id="2033d506-47fb-41eb-a281-c9b71928eca3" class="bulleted-list"><li style="list-style-type:disc">total_amount: decimal (total amount of the purchase order)</li></ul><ul id="dad6cef4-f6d3-4e5b-a9b6-a361401693b6" class="bulleted-list"><li style="list-style-type:disc">created_at: datetime (timestamp indicating when the purchase order was created)</li></ul><ul id="87e676f2-b3ac-423e-8f91-0de5b3b27cc6" class="bulleted-list"><li style="list-style-type:disc">updated_at: datetime (timestamp indicating when the purchase order was last updated)</li></ul><ul id="c7f70150-2e96-450b-a9bf-5118151a838d" class="toggle"><li><details open=""><summary>Sample Data:</summary><pre id="bcdecedc-ebd8-4435-a9e1-05d2a85eab2a" class="code"><code>[
+  {
+    &quot;id&quot;: 11001,
+    &quot;supplier_id&quot;: 10001,
+    &quot;product_id&quot;: 201,
+    &quot;quantity&quot;: 50,
+    &quot;total_amount&quot;: 2500.00,
+    &quot;created_at&quot;: &quot;2023-07-16T14:00:00Z&quot;,
+    &quot;updated_at&quot;: &quot;2023-07-16T14:30:00Z&quot;
+  },
+  {
+    &quot;id&quot;: 11002,
+    &quot;supplier_id&quot;: 10002,
+    &quot;product_id&quot;: 202,
+    &quot;quantity&quot;: 100,
+    &quot;total_amount&quot;: 3000.00,
+    &quot;created_at&quot;: &quot;2023-07-15T16:30:00Z&quot;,
+    &quot;updated_at&quot;: &quot;2023-07-16T09:45:00Z&quot;
+  }
+]</code></pre></details></li></ul><p id="24f48cb9-d806-4d47-ad4b-e04a70cd405a" class="">
+</p><p id="197d74c7-b373-4a4e-bd87-abe4937ab50e" class="">
+</p><figure id="dac5ca55-e673-47c2-a06f-0ab0158b62c0" class="link-to-page"><a href="https://www.notion.so/E-commerce-Backed-APIs-dac5ca55e67347c2a06f0ab0158b62c0?pvs=21">E-commerce Backed APIs</a></figure></div></article></body></html>
